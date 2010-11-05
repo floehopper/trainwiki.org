@@ -7,4 +7,6 @@ class Event < ActiveRecord::Base
   validates_presence_of :station
   validates_presence_of :timetabled_at
 
+  default_scope :order => :timetabled_at
+
 end

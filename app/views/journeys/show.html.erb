@@ -1,0 +1,22 @@
+<% content_for :title do %>
+  <title>Trainwiki - <%= "#{@journey.departs_at.to_s(:time)} #{@journey.origin_station.name} to  #{@journey.destination_station.name} on #{@journey.departs_on}" %></title>
+<% end %>
+
+<table id="stops">
+  <thead>
+    <tr>
+      <th class="name">Station</th>
+      <th class="departs_at">Arrives</th>
+      <th class="arrives_at">Departs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @journey.each_stop do |station, arrival, departure| %>
+    <tr>
+      <td class="name"><%= station.name %></td>
+      <td class="arrives_at"><%= arrival.timetabled_at.to_s(:time) if arrival.present? %></td>
+      <td class="departs_at"><%= departure.timetabled_at.to_s(:time) if departure.present? %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
