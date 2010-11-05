@@ -10,7 +10,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101105110111) do
+ActiveRecord::Schema.define(:version => 20101105120350) do
+
+  create_table "events", :force => true do |t|
+    t.string   "type"
+    t.integer  "journey_id"
+    t.integer  "station_id"
+    t.datetime "timetabled_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "events", ["journey_id"], :name => "index_events_on_journey_id"
+  add_index "events", ["station_id"], :name => "index_events_on_station_id"
+  add_index "events", ["timetabled_at"], :name => "index_events_on_timetabled_at"
+
+  create_table "journeys", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "stations", :force => true do |t|
     t.string   "name"
