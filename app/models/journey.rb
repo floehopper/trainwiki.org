@@ -7,7 +7,12 @@ class Journey < ActiveRecord::Base
   has_many :arrivals, :class_name => "Event::Arrival"
   has_many :stations, :through => :events, :uniq => true, :order => "events.timetabled_at"
 
-  before_save :store_identifier
+  before_validation :set_identifier
+
+  validates_presence_of :origin_departure
+  validates_presence_of :destination_arrival
+  validates_uniqueness_of :identifier
+  validate :identifier_not_changed
 
   class << self
     def build_from(details)
@@ -85,7 +90,27 @@ class Journey < ActiveRecord::Base
 
   private
 
-  def store_identifier
+  def set_identifier
     self.identifier = generate_identifier
+  end
+
+  def identifier_not_changed
+    if identifier_was.present? && identifier_changed?
+      errors.add(:identifier, "cannot be changed from #{identifier_was} to #{identifier}")
+    end
+  end
+
+  def must_have_exactly_one_origin_departure
+    origin_departures = events.select { |e| Event::OriginDeparture === e }
+    unless origin_departures.length == 1
+      errors.add(:base, "must have exactly one origin departure (not #{origin_departures.length})")
+    end
+  end
+
+  def must_have_exactly_one_destination_arrival
+    destination_arrivals = events.select { |e| Event::DestinationArrival === e }
+    unless destination_arrivals.length == 1
+      errors.add(:base, "must have exactly one destination arrival (not #{destination_arrivals.length})")
+    end
   end
 end
