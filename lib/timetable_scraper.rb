@@ -55,7 +55,7 @@ class TimetableScraper
               details = summary_row.details
               origins, destinations = details[:origins], details[:destinations]
               unless origins.include?(origin) && destinations.include?(destination)
-                Rails.logger.info "#{timestamp} - skipped because journey is from #{origins.join(",")} to #{destinations.join(",")}"
+                Rails.logger.info "#{timestamp} - skipped because journey is from #{origins.join(",")} to #{destinations.join(",")} (not from #{origin} to #{destination})"
                 next
               end
               Rails.logger.info "#{timestamp} - departure with #{details[:stops].length} stops found"
@@ -63,7 +63,7 @@ class TimetableScraper
               journey = Journey.build_from(details)
 
               unless journey.save
-                Rails.logger.info "#{timestamp} - journey not valid: #{journey.errors.full_messages}"
+                Rails.logger.info "#{timestamp} - journey not valid: #{journey.errors.full_messages.join(", ")}"
               end
             end
 
