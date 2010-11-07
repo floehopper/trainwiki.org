@@ -3,7 +3,7 @@ namespace "timetable" do
   task "scrape" => "environment" do
     puts "Running timetable:scrape rake task..."
     scraper = TimetableScraper.new
-    line = ENV["LINE"].blank? ? "East Coast Trains" : ENV["LINE"]
+    line = ENV["LINE"].blank? ? "East Coast" : ENV["LINE"]
     start_time = ENV["START_TIME"].blank? ? Date.tomorrow.beginning_of_day : Time.zone.parse(ENV["START_TIME"])
     delay_average = ENV["DELAY_AVERAGE"].blank? ? 2 : Integer(ENV["DELAY_AVERAGE"])
     delay_variation = ENV["DELAY_VARIATION"].blank? ? 2 : Integer(ENV["DELAY_VARIATION"])
