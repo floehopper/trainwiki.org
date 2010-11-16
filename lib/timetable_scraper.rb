@@ -50,8 +50,6 @@ class TimetableScraper
                 next
               end
 
-              sleep(delay_average + (delay_variation * 2) * (rand - 0.5))
-
               details = summary_row.details
 
               company = details[:company]
@@ -72,6 +70,9 @@ class TimetableScraper
               unless journey.save
                 puts "#{timestamp} - journey not valid: #{journey.errors.full_messages.join(", ")}"
               end
+
+              GC.start
+              sleep(delay_average + (delay_variation * 2) * (rand - 0.5))
             end
 
             if summary_rows.empty?
