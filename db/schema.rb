@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101105131516) do
+ActiveRecord::Schema.define(:version => 20101116210342) do
 
   create_table "events", :force => true do |t|
     t.string   "type"
@@ -32,6 +32,26 @@ ActiveRecord::Schema.define(:version => 20101105131516) do
   end
 
   add_index "journeys", ["identifier"], :name => "index_journeys_on_identifier"
+
+  create_table "lines", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lines", ["name"], :name => "index_lines_on_name"
+
+  create_table "routes", :force => true do |t|
+    t.integer  "line_id"
+    t.integer  "origin_station_id"
+    t.integer  "destination_station_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "routes", ["destination_station_id"], :name => "index_routes_on_destination_station_id"
+  add_index "routes", ["line_id"], :name => "index_routes_on_line_id"
+  add_index "routes", ["origin_station_id"], :name => "index_routes_on_origin_station_id"
 
   create_table "stations", :force => true do |t|
     t.string   "name"
