@@ -2,26 +2,6 @@ require "national-rail"
 
 class TimetableScraper
 
-  ORIGINS_VS_DESTINATIONS = {
-
-    "East Coast" => {
-      ["York"] => ["Newcastle"],
-      ["Newcastle"] => ["Glasgow Central"],
-      ["Doncaster"] => ["Glasgow Central"],
-      ["Leeds"] => ["Aberdeen"],
-      ["London Kings Cross"] => ["Leeds", "Edinburgh", "Glasgow Central", "Newcastle", "Aberdeen", "Inverness", "Hull", "Bradford Forster Square", "Skipton", "York"],
-      ["Peterborough", "Leeds", "Newcastle", "Bradford Forster Square", "Hull", "Skipton", "Edinburgh", "Harrogate", "Glasgow Central", "Aberdeen", "Inverness"] => ["London Kings Cross"],
-      ["Edinburgh"] => ["Newcastle"],
-      ["Aberdeen"] => ["Edinburgh"],
-      ["Glasgow Central"] => ["York"]
-    },
-
-    "Southeast Trains - High Speed" => {
-      ["London St Pancras (Domestic)"] => ["Rochester", "Margate", "Faversham", "Dover Priory", "Ebbsfleet International", "Ramsgate", "Ashford International"],
-      ["Ashford International", "Faversham", "Ramsgate", "Dover Priory", "Margate", "Ebbsfleet International", "Rochester"] => ["London St Pancras (Domestic)"]
-    }
-  }
-
   def scrape(line_name, start_time, delay_average = 2, delay_variation = 2)
     line = Line.find_by_name!(line_name)
     line.routes.each do |route|
