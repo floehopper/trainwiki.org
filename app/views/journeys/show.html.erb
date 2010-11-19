@@ -13,7 +13,7 @@
   <tbody>
     <% @journey.each_stop do |station, arrival, departure| %>
     <tr>
-      <td class="name"><%= station.name %></td>
+      <td class="name"><%= "#{station.name} (#{station.code})" %></td>
       <td class="arrives_at"><%= arrival.timetabled_at.to_s(:time) if arrival.present? %></td>
       <td class="departs_at"><%= departure.timetabled_at.to_s(:time) if departure.present? %></td>
     </tr>
