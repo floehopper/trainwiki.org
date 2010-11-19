@@ -44,6 +44,31 @@ class Journey < ActiveRecord::Base
       )
       journey
     end
+
+    def parse_identifier(identifier)
+      origin_code, departure_time, destination_code, arrival_time, departure_date = identifier.split("-")
+      origin_station = Station.find_by_code(origin_code)
+      departure_date.insert(4, "-").insert(-3, "-")
+      departure_time.insert(2, ":")
+      departs_at = Time.zone.parse("#{departure_time} #{departure_date}")
+      destination_station = Station.find_by_code(destination_code)
+      arrival_time.insert(2, ":")
+      arrives_at = Time.zone.parse("#{arrival_time} #{departure_date}")
+      [origin_station, departs_at, destination_station, arrives_at]
+    end
+
+    def find_canonical(identifier)
+      origin_station, departs_at, destination_station, arrives_at = parse_identifier(identifier)
+      departure_events = Event.departures.at_station(origin_station).timetabled_at(departs_at)
+      arrival_events = Event.arrivals.at_station(destination_station).timetabled_at(arrives_at)
+      journeys_in_common = departure_events.map(&:journey) & arrival_events.map(&:journey)
+      case journeys_in_common.length
+        when 0 then raise ActiveRecord::RecordNotFound, "No journey found for identifier: #{identifier}"
+        when 1 then return journeys_in_common.first
+        else raise "Multiple journeys found for identifier: #{identifier} which matches: #{journeys_in_common.map(&:identifier).inspect}"
+      end
+    end
+
   end
 
   def departs_at

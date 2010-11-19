@@ -8,7 +8,10 @@ class JourneysController < ApplicationController
   end
 
   def show
-    @journey = Journey.where(:identifier => params[:id]).includes(:events => :station).first
+    unless @journey = Journey.find_by_identifier(params[:id])
+      @journey = Journey.find_canonical(params[:id])
+      redirect_to journey_path(@journey), :status => :moved_permanently
+    end
   end
 
 end
