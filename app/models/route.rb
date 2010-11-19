@@ -3,7 +3,9 @@ class Route < ActiveRecord::Base
   belongs_to :origin_station, :class_name => "Station"
   belongs_to :destination_station, :class_name => "Station"
 
-  def scrape_journeys(start_time, delay_average = 2, delay_variation = 2)
+  def scrape_journeys(start_time)
+    delay_average ||= ENV["DELAY_AVERAGE"].blank? ? 2 : Integer(ENV["DELAY_AVERAGE"])
+    delay_variation ||= ENV["DELAY_VARIATION"].blank? ? 2 : Integer(ENV["DELAY_VARIATION"])
     origin = origin_station.name
     destination = destination_station.name
     time = start_time

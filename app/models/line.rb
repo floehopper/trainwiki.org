@@ -1,9 +1,9 @@
 class Line < ActiveRecord::Base
   has_many :routes
 
-  def scrape_journeys(start_time, delay_average = 2, delay_variation = 2)
+  def scrape_journeys(start_time)
     routes.each do |route|
-      route.scrape_journeys(start_time, delay_average, delay_variation)
+      route.scrape_journeys(start_time)
     end
   end
 end
