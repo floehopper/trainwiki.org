@@ -10,7 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101116210342) do
+ActiveRecord::Schema.define(:version => 20101205135836) do
+
+  create_table "errors", :force => true do |t|
+    t.integer  "route_id"
+    t.string   "message"
+    t.text     "backtrace"
+    t.datetime "search_from"
+    t.text     "page_html"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "errors", ["route_id"], :name => "index_errors_on_route_id"
 
   create_table "events", :force => true do |t|
     t.string   "type"
