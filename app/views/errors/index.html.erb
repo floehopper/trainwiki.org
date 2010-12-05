@@ -1,0 +1,24 @@
+<% content_for :title do %>
+  <title>Trainwiki - Errors</title>
+<% end %>
+
+<table id="errors">
+  <thead>
+    <tr>
+      <th>Origin</th>
+      <th>Destination</th>
+      <th>Search From</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @errors.each do |error| %>
+    <tr>
+      <td><%= error.route.origin_station.name %></td>
+      <td><%= error.route.destination_station.name %></td>
+      <td><%= error.search_from.to_s(:time) %></td>
+      <td><%= link_to "show", error %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
