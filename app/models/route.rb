@@ -33,6 +33,10 @@ class Route < ActiveRecord::Base
             puts "#{timestamp} - skipped because it has #{summary_row.number_of_changes} changes"
             next
           end
+          if summary_row.cancelled?
+            puts "#{timestamp} - skipped because it was cancelled"
+            next
+          end
 
           details = summary_row.details
 
