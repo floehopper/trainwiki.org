@@ -40,6 +40,11 @@ class Route < ActiveRecord::Base
 
           details = summary_row.details
 
+          if details.empty?
+            puts "#{timestamp} - skipped because no journey details available"
+            next
+          end
+
           company = details[:company]
           unless company == line.name
             puts "#{timestamp} - skipped because journey is not an #{line.name} service"
