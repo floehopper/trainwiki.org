@@ -10,11 +10,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101205135836) do
+ActiveRecord::Schema.define(:version => 20101227195310) do
 
   create_table "errors", :force => true do |t|
     t.integer  "route_id"
-    t.string   "message"
+    t.text     "message"
     t.text     "backtrace"
     t.datetime "search_from"
     t.text     "page_html"
