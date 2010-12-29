@@ -1,0 +1,4 @@
+    cap puppet:bootstrap # only if machine hasn't been bootstrapped before
+    cap puppet:apply
+    cap deploy:setup # only if app hasn't been deployed before
+    cap deploy
