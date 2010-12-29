@@ -9,3 +9,9 @@ test:
   username: root
   password:
   database: trainwiki_test
+
+production:
+  adapter: mysql
+  username: trainwiki
+  password: "jump50,biked"
+  database: trainwiki_production
