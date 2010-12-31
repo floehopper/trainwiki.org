@@ -5,6 +5,10 @@ manifest :app, %{
     deploy_to => "<%= deploy_to %>",
     domain => 'trainwiki.org'
   }
+
+  package { tidy:
+    ensure => present
+  }
 }
 
 manifest :db, %{
