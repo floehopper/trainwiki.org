@@ -7,3 +7,6 @@ require 'floehopper/deploy'
 
 set :repository, 'git@github.com:floehopper/trainwiki.org.git'
 set :application, 'trainwiki.org'
+
+set :whenever_command, 'bundle exec whenever'
+require 'whenever/capistrano'
