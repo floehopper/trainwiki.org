@@ -157,7 +157,7 @@ DEPENDENCIES
   floehopper-deploy!
   freerange-deploy!
   freerange-puppet!
-  hoptoad_notifier
+  hoptoad_notifier (= 2.3.12)
   mysql (= 2.8.1)
   national-rail (= 0.4.2)
   rails (= 3.0.1)
