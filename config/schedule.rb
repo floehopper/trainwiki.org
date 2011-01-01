@@ -1,6 +1,6 @@
 set :output, 'log/whenever.log'
 
-env :PATH, '$PATH:/usr/local/bin'
+env :PATH, '/usr/bin:/bin:/usr/local/bin'
 
 env :DELAY_AVERAGE, 5
 env :DELAY_VARIATION, 3
