@@ -8,5 +8,5 @@ every 1.day, :at => '2:00am' do
 end
 
 every 1.minute do
-  command 'env'
+  command 'env', :output => 'temp.log'
 end
