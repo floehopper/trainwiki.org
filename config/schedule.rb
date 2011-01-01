@@ -1,5 +1,6 @@
 set :output, 'log/whenever.log'
-set :job_template, "bash -l -i -c ':job'"
+
+env :PATH, '$PATH:/usr/local/bin'
 
 env :DELAY_AVERAGE, 5
 env :DELAY_VARIATION, 3
