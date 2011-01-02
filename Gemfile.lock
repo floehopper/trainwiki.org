@@ -93,7 +93,7 @@ GEM
       nokogiri (>= 1.2.1)
     mime-types (1.16)
     mysql (2.8.1)
-    national-rail (0.4.3)
+    national-rail (0.4.6)
       activesupport (~> 3.0.0)
       ffi (= 0.6.3)
       hpricot (~> 0.8.2)
@@ -163,6 +163,6 @@ DEPENDENCIES
   freerange-puppet!
   hoptoad_notifier (= 2.3.12)
   mysql (= 2.8.1)
-  national-rail (= 0.4.3)
+  national-rail (= 0.4.6)
   rails (= 3.0.1)
   whenever (= 0.6.2)
