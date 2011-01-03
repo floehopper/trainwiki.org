@@ -80,6 +80,7 @@ GEM
       activesupport
       builder
     hpricot (0.8.3)
+    htmlentities (4.2.2)
     httparty (0.6.1)
       crack (= 0.1.8)
     i18n (0.4.2)
@@ -93,10 +94,11 @@ GEM
       nokogiri (>= 1.2.1)
     mime-types (1.16)
     mysql (2.8.1)
-    national-rail (0.4.6)
+    national-rail (0.4.9)
       activesupport (~> 3.0.0)
       ffi (= 0.6.3)
       hpricot (~> 0.8.2)
+      htmlentities (~> 4.2.2)
       i18n (~> 0.4.1)
       mechanize (~> 1.0.0)
       nokogiri (~> 1.4.4)
@@ -163,6 +165,6 @@ DEPENDENCIES
   freerange-puppet!
   hoptoad_notifier (= 2.3.12)
   mysql (= 2.8.1)
-  national-rail (= 0.4.6)
+  national-rail (= 0.4.9)
   rails (= 3.0.1)
   whenever (= 0.6.2)

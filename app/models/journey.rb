@@ -69,6 +69,19 @@ class Journey < ActiveRecord::Base
       end
     end
 
+    def generate_identifier(origin_station, departs_at, destination_station, arrives_at, departs_on)
+      [
+        origin_station.code,
+        departs_at.to_s(:short_time),
+        destination_station.code,
+        arrives_at.to_s(:short_time),
+        departs_on.to_s(:number)
+      ].join("-")
+    end
+  end
+
+  def generate_identifier
+    self.class.generate_identifier(origin_station, departs_at, destination_station, arrives_at, departs_on)
   end
 
   def departs_at
@@ -93,16 +106,6 @@ class Journey < ActiveRecord::Base
 
   def to_param
     identifier
-  end
-
-  def generate_identifier
-    [
-      origin_station.code,
-      departs_at.to_s(:short_time),
-      destination_station.code,
-      arrives_at.to_s(:short_time),
-      departs_on.to_s(:number)
-    ].join("-")
   end
 
   def each_stop
