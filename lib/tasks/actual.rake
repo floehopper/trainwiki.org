@@ -7,7 +7,7 @@ namespace "actual" do
       destination_station = Station.find_by_name("London Kings Cross")
       boards = NationalRail::VirginLiveDepartureBoards.new
       boards.summary(destination_station.code).each do |row|
-        if (row[:operator] == "East Coast") && (row[:to] == "**Terminates**") && row.details[:will_call_at].empty?
+        if (row[:operator] == "East Coast Mainline") && (row[:to] == "**Terminates**") && row.details[:will_call_at].empty?
           puts
           next unless row.details[:previous_calling_points].any?
 
