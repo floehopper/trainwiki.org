@@ -76,7 +76,7 @@ GEM
     ffi (0.6.3)
       rake (>= 0.8.7)
     highline (1.6.1)
-    hoptoad_notifier (2.3.12)
+    hoptoad_notifier (2.4.8)
       activesupport
       builder
     hpricot (0.8.3)
@@ -163,7 +163,7 @@ DEPENDENCIES
   floehopper-deploy!
   freerange-deploy!
   freerange-puppet!
-  hoptoad_notifier (= 2.3.12)
+  hoptoad_notifier
   mysql (= 2.8.1)
   national-rail (= 0.4.9)
   rails (= 3.0.1)
