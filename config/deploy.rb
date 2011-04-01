@@ -1,6 +1,7 @@
 set :stages, %w(production)
 set :default_stage, 'production'
 
+require 'bundler/capistrano'
 require 'freerange/deploy'
 require 'freerange/puppet'
 require 'floehopper/deploy'
