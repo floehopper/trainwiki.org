@@ -10,7 +10,17 @@ class DenormalizeOriginAndDepartureOntoJourneys < ActiveRecord::Migration
     # add_index :journeys, :destination_station_id
     # add_index :journeys, :arrives_at
 
-    Journey.all.each { |j| j.save }
+    update %{
+      UPDATE journeys, events
+      SET journeys.origin_station_id = events.station_id, journeys.departs_at = events.timetabled_at
+      WHERE journeys.id = events.journey_id AND events.type = 'Event::OriginDeparture'
+    }
+
+    update %{
+      UPDATE journeys, events
+      SET journeys.destination_station_id = events.station_id, journeys.arrives_at = events.timetabled_at
+      WHERE journeys.id = events.journey_id AND events.type = 'Event::DestinationArrival'
+    }
   end
 
   def self.down
