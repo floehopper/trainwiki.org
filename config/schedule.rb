@@ -9,6 +9,6 @@ every 1.day, :at => '2:00am' do
   rake 'timetable:scrape'
 end
 
-every 1.minute do
-  rake 'actual:scrape'
-end
+# every 1.minute do
+#   rake 'actual:scrape'
+# end
