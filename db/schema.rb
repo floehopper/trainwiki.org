@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110402112245) do
+ActiveRecord::Schema.define(:version => 20110402133345) do
 
   create_table "errors", :force => true do |t|
     t.integer  "route_id"
@@ -43,9 +43,17 @@ ActiveRecord::Schema.define(:version => 20110402112245) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "identifier"
+    t.integer  "origin_station_id"
+    t.datetime "departs_at"
+    t.integer  "destination_station_id"
+    t.datetime "arrives_at"
   end
 
+  add_index "journeys", ["arrives_at"], :name => "index_journeys_on_arrives_at"
+  add_index "journeys", ["departs_at"], :name => "index_journeys_on_departs_at"
+  add_index "journeys", ["destination_station_id"], :name => "index_journeys_on_destination_station_id"
   add_index "journeys", ["identifier"], :name => "index_journeys_on_identifier"
+  add_index "journeys", ["origin_station_id"], :name => "index_journeys_on_origin_station_id"
 
   create_table "lines", :force => true do |t|
     t.string   "name"

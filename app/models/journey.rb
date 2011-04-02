@@ -7,12 +7,19 @@ class Journey < ActiveRecord::Base
   has_many :arrivals, :class_name => "Event::Arrival"
   has_many :stations, :through => :events, :uniq => true, :order => "events.timetabled_at"
 
+  belongs_to :origin_station, :class_name => "Station"
+  belongs_to :destination_station, :class_name => "Station"
+
+  before_validation :set_origin
+  before_validation :set_destination
   before_validation :set_identifier
 
   validates_presence_of :origin_departure
   validates_presence_of :destination_arrival
   validates_uniqueness_of :identifier
   validate :identifier_not_changed
+
+  named_scope :departs_on, lambda { |date| { :conditions => ["DATE(departs_at) = ?", date] } }
 
   class << self
     def build_from(details)
@@ -84,22 +91,6 @@ class Journey < ActiveRecord::Base
     self.class.generate_identifier(origin_station, departs_at, destination_station, arrives_at, departs_on)
   end
 
-  def departs_at
-    origin_departure.timetabled_at
-  end
-
-  def origin_station
-    origin_departure.station
-  end
-
-  def arrives_at
-    destination_arrival.timetabled_at
-  end
-
-  def destination_station
-    destination_arrival.station
-  end
-
   def departs_on
     departs_at.to_date
   end
@@ -117,6 +108,16 @@ class Journey < ActiveRecord::Base
   end
 
   private
+
+  def set_origin
+    self.origin_station = origin_departure.station
+    self.departs_at = origin_departure.timetabled_at
+  end
+
+  def set_destination
+    self.destination_station = destination_arrival.station
+    self.arrives_at = destination_arrival.timetabled_at
+  end
 
   def set_identifier
     self.identifier = generate_identifier

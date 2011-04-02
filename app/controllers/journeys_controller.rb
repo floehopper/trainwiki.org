@@ -1,10 +1,7 @@
 class JourneysController < ApplicationController
 
   def index
-    @journeys = Journey.includes(
-      :origin_departure => :station,
-      :destination_arrival => :station
-    ).all.sort_by { |j| j.departs_at }
+    @journeys = Journey.departs_on(Date.today).includes(:origin_station, :destination_station).order(:departs_at)
   end
 
   def show
