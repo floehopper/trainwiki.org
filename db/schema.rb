@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110401162633) do
+ActiveRecord::Schema.define(:version => 20110402112245) do
 
   create_table "errors", :force => true do |t|
     t.integer  "route_id"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20110401162633) do
   add_index "events", ["journey_id"], :name => "index_events_on_journey_id"
   add_index "events", ["station_id"], :name => "index_events_on_station_id"
   add_index "events", ["timetabled_at"], :name => "index_events_on_timetabled_at"
+  add_index "events", ["type"], :name => "index_events_on_type"
 
   create_table "journeys", :force => true do |t|
     t.datetime "created_at"
