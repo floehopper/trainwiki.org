@@ -1,6 +1,9 @@
 namespace "actual" do
   desc "Scrape live departure boards for actual train arrival & departure times"
   task "scrape" => "environment" do
+    unless File.new(__FILE__).flock(File::LOCK_EX | File::LOCK_NB)
+      abort "Cannot obtain lock, another process is running this task"
+    end
     begin
       puts "Running actual:scrape rake task..."
 
