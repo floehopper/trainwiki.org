@@ -12,14 +12,29 @@ namespace "actual" do
           next unless row.details[:previous_calling_points].any?
 
           origin_station = Station.first(:conditions => ['name LIKE ?', "#{row[:from]}%"])
+          if origin_station.nil?
+            puts "Origin station not found: #{row[:from]}"
+            next
+          end
           departs_at = row.details[:previous_calling_points][0][:timetabled_departure]
           arrives_at = row[:timetabled_arrival]
           departs_on = departs_at.to_date
           identifier = Journey.generate_identifier(origin_station, departs_at, destination_station, arrives_at, departs_on)
           journey = Journey.find_by_identifier(identifier)
           if journey.nil?
-            puts "No journey found for #{identifier}"
-            next
+            puts "Creating journey for #{identifier}"
+            journey = Journey.new
+            journey.build_origin_departure(
+              :journey => journey,
+              :station => origin_station,
+              :timetabled_at => departs_at
+            )
+            journey.build_destination_arrival(
+              :journey => journey,
+              :station => destination_station,
+              :timetabled_at => arrives_at
+            )
+            journey.save!
           end
           puts identifier
           row.details[:previous_calling_points].each do |stop|
@@ -29,22 +44,41 @@ namespace "actual" do
               next
             end
 
-            # i have seen a service amended to add an extra stop
-            # in this case, there may be no existing departure
-            # consider adding one...? or at least flagging this up
             departure = journey.events.departures.at_station(station).first
 
-            timetabled_at = stop[:timetabled_departure]
-            expected_at = stop[:expected_departure]
-            happened_at = stop[:actual_departure]
+            if departure.nil?
+              puts "Creating departure event for #{station.code}"
+              departure = journey.departures.build(
+                :journey => journey,
+                :station => station,
+                :timetabled_at => stop[:timetabled_departure]
+              )
+              journey.save!
+            end
 
-            puts [station.code, departure ? departure.timetabled_at.strftime("%H:%M") : "no stop", timetabled_at.strftime("%H:%M"), Time === expected_at ? expected_at.strftime("%H:%M") : expected_at, Time === happened_at ? happened_at.strftime("%H:%M") : happened_at].join("\t")
+            unless stop[:timetabled_departure] == departure.timetabled_at
+              puts "Timetabled departure #{stop[:timetabled_departure].to_s(:time)} does not match #{departure.timetabled_at.to_s(:time)}"
+            end
+
+            happened_at = stop[:actual_departure]
+            happened_at = stop[:timetabled_departure] if happened_at == "On time"
+            if Time === happened_at
+              puts "#{departure.station.code} - #{happened_at.to_s(:time)}"
+              departure.update_attributes!(:happened_at => happened_at)
+            else
+              puts "#{departure.station.code} - #{happened_at}"
+            end
           end
-          station = journey.destination_station
-          timetabled_at = journey.destination_arrival.timetabled_at
-          expected_at = happened_at = row[:expected_arrival]
-          # note that it looks like we need to infer the actual arrival from the last expected arrival time
-          puts [station.code, journey.destination_arrival.timetabled_at.strftime("%H:%M"), timetabled_at.strftime("%H:%M"), Time === expected_at ? expected_at.strftime("%H:%M") : expected_at, Time === happened_at ? happened_at.strftime("%H:%M") : happened_at].join("\t")
+
+          arrival = journey.destination_arrival
+          happened_at = row[:expected_arrival]
+          happened_at = row[:timetabled_arrival] if happened_at == "On time"
+          if Time === happened_at
+            puts "#{arrival.station.code} - #{happened_at.to_s(:time)}"
+            arrival.update_attributes!(:happened_at => happened_at)
+          else
+            puts "#{arrival.station.code} - #{happened_at}"
+          end
         end
       end
 

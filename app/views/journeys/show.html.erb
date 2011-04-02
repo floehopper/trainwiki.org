@@ -8,14 +8,18 @@
       <th class="name">Station</th>
       <th class="departs_at">Arrives</th>
       <th class="arrives_at">Departs</th>
+      <th class="departed_at">Departed</th>
+      <th class="arrived_at">Arrived</th>
     </tr>
   </thead>
   <tbody>
     <% @journey.each_stop do |station, arrival, departure| %>
     <tr>
       <td class="name"><%= "#{station.name} (#{station.code})" %></td>
-      <td class="arrives_at"><%= arrival.timetabled_at.to_s(:time) if arrival.present? %></td>
-      <td class="departs_at"><%= departure.timetabled_at.to_s(:time) if departure.present? %></td>
+      <td class="arrives_at"><%= arrival.try(:timetabled_at).try(:to_s, :time) %></td>
+      <td class="departs_at"><%= departure.try(:timetabled_at).try(:to_s, :time) %></td>
+      <td class="arrived_at"><%= arrival.try(:happened_at).try(:to_s, :time) %></td>
+      <td class="departed_at"><%= departure.try(:happened_at).try(:to_s, :time) %></td>
     </tr>
     <% end %>
   </tbody>
