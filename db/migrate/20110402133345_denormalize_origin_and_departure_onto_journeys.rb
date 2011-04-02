@@ -1,14 +1,14 @@
 class DenormalizeOriginAndDepartureOntoJourneys < ActiveRecord::Migration
   def self.up
-    # add_column :journeys, :origin_station_id, :integer
-    # add_column :journeys, :departs_at, :datetime
-    # add_column :journeys, :destination_station_id, :integer
-    # add_column :journeys, :arrives_at, :datetime
-    # 
-    # add_index :journeys, :origin_station_id
-    # add_index :journeys, :departs_at
-    # add_index :journeys, :destination_station_id
-    # add_index :journeys, :arrives_at
+    add_column :journeys, :origin_station_id, :integer
+    add_column :journeys, :departs_at, :datetime
+    add_column :journeys, :destination_station_id, :integer
+    add_column :journeys, :arrives_at, :datetime
+
+    add_index :journeys, :origin_station_id
+    add_index :journeys, :departs_at
+    add_index :journeys, :destination_station_id
+    add_index :journeys, :arrives_at
 
     update %{
       UPDATE journeys, events
