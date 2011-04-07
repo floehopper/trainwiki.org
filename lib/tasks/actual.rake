@@ -12,14 +12,25 @@ namespace "actual" do
       boards.summary(destination_station.code).each do |row|
         if (row[:operator] == "East Coast Mainline") && (row[:to] == "**Terminates**") && row.details[:will_call_at].empty?
           puts
-          next unless row.details[:previous_calling_points].any?
+          details = row.details
+
+          unless details[:previous_calling_points].any?
+            puts "No calling points found.\nrow = #{row.inspect}"
+            next
+          end
 
           origin_station = Station.first(:conditions => ['name LIKE ?', "#{row[:from]}%"])
           if origin_station.nil?
             puts "Origin station not found: #{row[:from]}"
             next
           end
-          departs_at = row.details[:previous_calling_points][0][:timetabled_departure]
+
+          unless details[:previous_calling_points][0]
+            puts "First calling point is blank.\nrow = #{row.inspect}\ndetails=#{details.inspect}"
+            next
+          end
+
+          departs_at = details[:previous_calling_points][0][:timetabled_departure]
           arrives_at = row[:timetabled_arrival]
           departs_on = departs_at.to_date
           identifier = Journey.generate_identifier(origin_station, departs_at, destination_station, arrives_at, departs_on)
@@ -40,7 +51,7 @@ namespace "actual" do
             journey.save!
           end
           puts identifier
-          row.details[:previous_calling_points].each do |stop|
+          details[:previous_calling_points].each do |stop|
             station = Station.first(:conditions => ['name LIKE ?', "#{stop[:station]}%"])
             if station.nil?
               puts "Station not found: #{stop[:station]}"
