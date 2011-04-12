@@ -11,6 +11,8 @@
       <th class="departs_at">Departs</th>
       <th class="arrived_at">Arrived</th>
       <th class="departed_at">Departed</th>
+      <th class="">Arrival Lateness</th>
+      <th class="">Departure Lateness</th>
     </tr>
   </thead>
   <tbody>
@@ -22,6 +24,8 @@
       <td class="departs_at"><%= departure.try(:timetabled_at).try(:to_s, :time) %></td>
       <td class="arrived_at"><%= arrival.try(:happened_at).try(:to_s, :time) %></td>
       <td class="departed_at"><%= departure.try(:happened_at).try(:to_s, :time) %></td>
+      <td class=""><%= arrival.try(:late_minutes) %></td>
+      <td class=""><%= departure.try(:late_minutes) %></td>
     </tr>
     <% end %>
   </tbody>

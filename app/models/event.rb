@@ -16,4 +16,9 @@ class Event < ActiveRecord::Base
 
   named_scope :at_station, lambda { |station| { :conditions => { :station_id => station.id } } }
   named_scope :timetabled_at, lambda { |time| { :conditions => ["timetabled_at = ?", time] } }
+
+  def late_minutes
+    return nil unless timetabled_at && happened_at
+    ((happened_at - timetabled_at) / 60).to_i
+  end
 end
