@@ -10,6 +10,6 @@ gem 'floehopper-deploy', :git => "git://github.com/floehopper/floehopper-deploy.
 
 gem 'rails', '3.0.1'
 gem 'mysql', '2.8.1'
-gem 'national-rail', '0.4.11'
+gem 'national-rail', '0.4.12'
 gem 'hoptoad_notifier'
 gem 'whenever', '0.6.2', :require => false
