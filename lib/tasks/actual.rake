@@ -118,6 +118,13 @@ namespace "actual" do
         end
       end
       puts "...completed in #{'%.2f' % realtime} seconds."
+      if realtime > 5
+        HoptoadNotifier.notify(
+           :error_class   => "ActualScrapeTooLong",
+           :error_message => "Actual scrape took more than 5 seconds",
+           :parameters    => { :realtime => realtime }
+         )
+      end
     rescue => e
       HoptoadNotifier.notify(e)
       raise
