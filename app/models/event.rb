@@ -9,13 +9,13 @@ class Event < ActiveRecord::Base
 
   default_scope :order => :timetabled_at
 
-  named_scope :arrivals, :conditions => { :type => %w(Event::Arrival Event::DestinationArrival) }
-  named_scope :departures, :conditions => { :type => %w(Event::Departure Event::OriginDeparture) }
-  named_scope :origin_departures, :conditions => { :type => "Event::OriginDeparture" }
-  named_scope :destination_arrivals, :conditions => { :type => "Event::DestinationArrival" }
+  scope :arrivals, :conditions => { :type => %w(Event::Arrival Event::DestinationArrival) }
+  scope :departures, :conditions => { :type => %w(Event::Departure Event::OriginDeparture) }
+  scope :origin_departures, :conditions => { :type => "Event::OriginDeparture" }
+  scope :destination_arrivals, :conditions => { :type => "Event::DestinationArrival" }
 
-  named_scope :at_station, lambda { |station| { :conditions => { :station_id => station.id } } }
-  named_scope :timetabled_at, lambda { |time| { :conditions => ["timetabled_at = ?", time] } }
+  scope :at_station, lambda { |station| { :conditions => { :station_id => station.id } } }
+  scope :timetabled_at, lambda { |time| { :conditions => ["timetabled_at = ?", time] } }
 
   def late_minutes
     return nil unless timetabled_at && happened_at

@@ -19,7 +19,7 @@ class Journey < ActiveRecord::Base
   validates_uniqueness_of :identifier
   validate :identifier_not_changed
 
-  named_scope :departs_on, lambda { |date| { :conditions => ["DATE(departs_at) = ?", date] } }
+  scope :departs_on, lambda { |date| { :conditions => ["DATE(departs_at) = ?", date] } }
 
   class << self
     def build_from(details)
