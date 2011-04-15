@@ -12,7 +12,7 @@ class JourneysController < ApplicationController
   end
 
   def show
-    if @journey = Journey.find_by_identifier(params[:id])
+    if @journey = Journey.includes(:events => :station).find_by_identifier(params[:id])
       @previous_journey = @journey.previous
       @next_journey = @journey.next
     else
