@@ -5,12 +5,12 @@
 <h1>Journeys for <%= @date.to_s(:full_ordinal) %></h1>
 
 <div id="navigation">
-  <% if Journey.departs_on(@date - 1).any? %>
-    <%= link_to "< Previous Day", journeys_path(:date => @date - 1), :class => "previous" %>
+  <% if @previous_journeys %>
+    <%= link_to "< #{(@date - 1).to_s(:day_of_week)}", journeys_path(:date => @date - 1), :class => "previous" %>
   <% end %>
   <%= link_to "Today", journeys_path(:date => Date.today), :class => "today" %>
-  <% if Journey.departs_on(@date + 1).any? %>
-    <%= link_to "Next Day >", journeys_path(:date => @date + 1), :class => "next" %>
+  <% if @next_journeys %>
+    <%= link_to "#{(@date + 1).to_s(:day_of_week)} >", journeys_path(:date => @date + 1), :class => "next" %>
   <% end %>
 </div>
 
@@ -48,11 +48,11 @@
 <% end %>
 
 <div id="navigation">
-  <% if Journey.departs_on(@date - 1).any? %>
-    <%= link_to "< Previous Day", journeys_path(:date => @date - 1), :class => "previous" %>
+  <% if @previous_journeys %>
+    <%= link_to "< #{(@date - 1).to_s(:day_of_week)}", journeys_path(:date => @date - 1), :class => "previous" %>
   <% end %>
   <%= link_to "Today", journeys_path(:date => Date.today), :class => "today" %>
-  <% if Journey.departs_on(@date + 1).any? %>
-    <%= link_to "Next Day >", journeys_path(:date => @date + 1), :class => "next" %>
+  <% if @next_journeys %>
+    <%= link_to "#{(@date + 1).to_s(:day_of_week)} >", journeys_path(:date => @date + 1), :class => "next" %>
   <% end %>
 </div>
