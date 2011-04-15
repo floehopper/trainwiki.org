@@ -10,7 +10,10 @@ class JourneysController < ApplicationController
   end
 
   def show
-    unless @journey = Journey.find_by_identifier(params[:id])
+    if @journey = Journey.find_by_identifier(params[:id])
+      @previous_journey = @journey.previous
+      @next_journey = @journey.next
+    else
       @journey = Journey.find_canonical(params[:id])
       redirect_to journey_path(@journey), :status => :moved_permanently
     end
