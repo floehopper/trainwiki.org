@@ -107,6 +107,26 @@ class Journey < ActiveRecord::Base
     end
   end
 
+  def previous
+    result, offset = nil, 1
+    while result.nil? && (offset <= 3)
+      identifier = self.class.generate_identifier(origin_station, departs_at, destination_station, arrives_at, departs_on - offset)
+      result = self.class.find_by_identifier(identifier)
+      offset += 1
+    end
+    result
+  end
+
+  def next
+    result, offset = nil, 1
+    while result.nil? && (offset <= 3)
+      identifier = self.class.generate_identifier(origin_station, departs_at, destination_station, arrives_at, departs_on + offset)
+      result = self.class.find_by_identifier(identifier)
+      offset += 1
+    end
+    result
+  end
+
   private
 
   def set_origin

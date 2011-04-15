@@ -1,7 +1,12 @@
 class JourneysController < ApplicationController
 
   def index
-    @journeys = Journey.departs_on(Date.today).includes(:origin_station, :destination_station).order(:departs_at)
+    if params[:date].present?
+      @date = Date.parse(params[:date])
+      @journeys = Journey.departs_on(@date).includes(:origin_station, :destination_station).order(:departs_at)
+    else
+      redirect_to journeys_path(:date => Date.today)
+    end
   end
 
   def show

@@ -1,32 +1,58 @@
 <% content_for :title do %>
-  <title>Train Wiki - Journeys</title>
+  <title>Train Wiki - Journeys for <%= @date.to_s(:full_ordinal) %></title>
 <% end %>
 
-<table id="journeys">
-  <thead>
-    <tr>
-      <th class="date">Date</th>
-      <th class="station name">Origin</th>
-      <th class="station code">Code</th>
-      <th class="time">Departs</th>
-      <th class="station name">Destination</th>
-      <th class="station code">Code</th>
-      <th class="time">Arrives</th>
-      <th>Link</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @journeys.each do |journey| %>
-    <tr>
-      <td class="date"><%= journey.departs_at.to_date %></td>
-      <td class="station name"><%= journey.origin_station.name %></td>
-      <td class="station code"><%= journey.origin_station.code %></td>
-      <td class="time"><%= journey.departs_at.to_s(:time) %></td>
-      <td class="station name"><%= journey.destination_station.name %></td>
-      <td class="station code"><%= journey.destination_station.code %></td>
-      <td class="time"><%= journey.arrives_at.to_s(:time) %></td>
-      <td><%= link_to "link", journey %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<h1>Journeys for <%= @date.to_s(:full_ordinal) %></h1>
+
+<div id="navigation">
+  <% if Journey.departs_on(@date - 1).any? %>
+    <%= link_to "< Previous Day", journeys_path(:date => @date - 1), :class => "previous" %>
+  <% end %>
+  <%= link_to "Today", journeys_path(:date => Date.today), :class => "today" %>
+  <% if Journey.departs_on(@date + 1).any? %>
+    <%= link_to "Next Day >", journeys_path(:date => @date + 1), :class => "next" %>
+  <% end %>
+</div>
+
+<% if @journeys.any? %>
+  <table id="journeys">
+    <thead>
+      <tr>
+        <th class="date">Date</th>
+        <th class="station name">Origin</th>
+        <th class="station code">Code</th>
+        <th class="time">Departs</th>
+        <th class="station name">Destination</th>
+        <th class="station code">Code</th>
+        <th class="time">Arrives</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @journeys.each do |journey| %>
+      <tr>
+        <td class="date"><%= journey.departs_at.to_date %></td>
+        <td class="station name"><%= journey.origin_station.name %></td>
+        <td class="station code"><%= journey.origin_station.code %></td>
+        <td class="time"><%= journey.departs_at.to_s(:time) %></td>
+        <td class="station name"><%= journey.destination_station.name %></td>
+        <td class="station code"><%= journey.destination_station.code %></td>
+        <td class="time"><%= journey.arrives_at.to_s(:time) %></td>
+        <td><%= link_to "details", journey %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>There aren't any journeys available for this date yet.</p>
+<% end %>
+
+<div id="navigation">
+  <% if Journey.departs_on(@date - 1).any? %>
+    <%= link_to "< Previous Day", journeys_path(:date => @date - 1), :class => "previous" %>
+  <% end %>
+  <%= link_to "Today", journeys_path(:date => Date.today), :class => "today" %>
+  <% if Journey.departs_on(@date + 1).any? %>
+    <%= link_to "Next Day >", journeys_path(:date => @date + 1), :class => "next" %>
+  <% end %>
+</div>

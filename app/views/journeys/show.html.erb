@@ -2,6 +2,18 @@
   <title>Train Wiki - <%= journey_description(@journey) %></title>
 <% end %>
 
+<h1><%= journey_description(@journey) %></h1>
+
+<div id="navigation">
+  <% if @journey.previous.present? %>
+    <%= link_to "< Previous Journey (#{@journey.previous.departs_on.to_s(:day_of_week)})", journey_path(@journey.previous), :class => "previous" %>
+  <% end %>
+  <%= link_to "All Journeys (#{@journey.departs_on.to_s(:day_of_week)})", journeys_path(:date => Date.today), :class => "today" %>
+  <% if @journey.next.present? %>
+    <%= link_to "Next Journey (#{@journey.next.departs_on.to_s(:day_of_week)}) >", journey_path(@journey.next), :class => "next" %>
+  <% end %>
+</div>
+
 <table id="stops">
   <thead>
     <tr>
@@ -30,3 +42,13 @@
     <% end %>
   </tbody>
 </table>
+
+<div id="navigation">
+  <% if @journey.previous.present? %>
+    <%= link_to "< Previous Journey (#{@journey.previous.departs_on.to_s(:day_of_week)})", journey_path(@journey.previous), :class => "previous" %>
+  <% end %>
+  <%= link_to "All Journeys (#{@journey.departs_on.to_s(:day_of_week)})", journeys_path(:date => Date.today), :class => "today" %>
+  <% if @journey.next.present? %>
+    <%= link_to "Next Journey (#{@journey.next.departs_on.to_s(:day_of_week)}) >", journey_path(@journey.next), :class => "next" %>
+  <% end %>
+</div>
