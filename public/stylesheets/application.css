@@ -1,0 +1,18 @@
+table, tr, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+
+th, td {
+  padding: 3px;
+  text-align: center;
+}
+
+td.station.name, td.station.code {
+  text-align: left;
+}
+
+td.time, td.date {
+  text-align: right;
+}

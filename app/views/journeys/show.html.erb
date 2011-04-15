@@ -5,27 +5,27 @@
 <table id="stops">
   <thead>
     <tr>
-      <th class="station_name">Station</th>
-      <th class="station_code">Code</th>
-      <th class="arrives_at">Arrives</th>
-      <th class="departs_at">Departs</th>
-      <th class="arrived_at">Arrived</th>
-      <th class="departed_at">Departed</th>
-      <th class="">Arrival Lateness</th>
-      <th class="">Departure Lateness</th>
+      <th class="station name">Station</th>
+      <th class="station code">Code</th>
+      <th class="time">Arrives</th>
+      <th class="time">Departs</th>
+      <th class="time">Arrived</th>
+      <th class="time">Departed</th>
+      <th class="minutes">Late (arr)</th>
+      <th class="minutes">Late (dep)</th>
     </tr>
   </thead>
   <tbody>
     <% @journey.each_stop do |station, arrival, departure| %>
     <tr>
-      <td class="station_name"><%= station.name %></td>
-      <td class="station_code"><%= station.code %></td>
-      <td class="arrives_at"><%= arrival.try(:timetabled_at).try(:to_s, :time) %></td>
-      <td class="departs_at"><%= departure.try(:timetabled_at).try(:to_s, :time) %></td>
-      <td class="arrived_at"><%= arrival.try(:happened_at).try(:to_s, :time) %></td>
-      <td class="departed_at"><%= departure.try(:happened_at).try(:to_s, :time) %></td>
-      <td class=""><%= arrival.try(:late_minutes) %></td>
-      <td class=""><%= departure.try(:late_minutes) %></td>
+      <td class="station name"><%= station.name %></td>
+      <td class="station code"><%= station.code %></td>
+      <td class="time"><%= arrival.try(:timetabled_at).try(:to_s, :time) %></td>
+      <td class="time"><%= departure.try(:timetabled_at).try(:to_s, :time) %></td>
+      <td class="time"><%= arrival.try(:happened_at).try(:to_s, :time) %></td>
+      <td class="time"><%= departure.try(:happened_at).try(:to_s, :time) %></td>
+      <td class="minutes"><%= arrival.try(:late_minutes) %></td>
+      <td class="minutes"><%= departure.try(:late_minutes) %></td>
     </tr>
     <% end %>
   </tbody>

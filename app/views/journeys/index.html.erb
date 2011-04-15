@@ -5,26 +5,26 @@
 <table id="journeys">
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Origin</th>
-      <th>Code</th>
-      <th>Departs</th>
-      <th>Destination</th>
-      <th>Code</th>
-      <th>Arrives</th>
+      <th class="date">Date</th>
+      <th class="station name">Origin</th>
+      <th class="station code">Code</th>
+      <th class="time">Departs</th>
+      <th class="station name">Destination</th>
+      <th class="station code">Code</th>
+      <th class="time">Arrives</th>
       <th>Link</th>
     </tr>
   </thead>
   <tbody>
     <% @journeys.each do |journey| %>
     <tr>
-      <td><%= journey.departs_at.to_date %></td>
-      <td><%= journey.origin_station.name %></td>
-      <td><%= journey.origin_station.code %></td>
-      <td><%= journey.departs_at.to_s(:time) %></td>
-      <td><%= journey.destination_station.name %></td>
-      <td><%= journey.destination_station.code %></td>
-      <td><%= journey.arrives_at.to_s(:time) %></td>
+      <td class="date"><%= journey.departs_at.to_date %></td>
+      <td class="station name"><%= journey.origin_station.name %></td>
+      <td class="station code"><%= journey.origin_station.code %></td>
+      <td class="time"><%= journey.departs_at.to_s(:time) %></td>
+      <td class="station name"><%= journey.destination_station.name %></td>
+      <td class="station code"><%= journey.destination_station.code %></td>
+      <td class="time"><%= journey.arrives_at.to_s(:time) %></td>
       <td><%= link_to "link", journey %></td>
     </tr>
     <% end %>
